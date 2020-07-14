@@ -22,25 +22,34 @@ from os.path import isfile
 print("Give URL:")
 url = input()
 try:
-    video = YouTube(url)
-    st = video.streams.all()
+    pytube_object = YouTube(url)
+    stream = pytube_object.streams.all()
 
-    for i in st:
+    print(pytube_object.title)  # YouTube video tile
+
+    for i in stream:
         print(i)
 
     tag = input("Input tag you want to download:")
 
     # Add Serial Number at the end of filename
-    sequence = ""
-    Filename = "YouTube%s.mp4"
+    sequence = 1
+    # Filename = "YouTube%s.mp4"
+    Filename_ori = pytube_object.title + ".mp4"
 
-    while isfile(Filename % sequence):
-        sequence = int(sequence or 0) + 1
-    Filename = Filename % sequence
+    Filename = pytube_object.title + "(%s).mp4"
 
-    Filename = Filename.replace('.mp4','')
+    if isfile(Filename_ori):
+        while isfile(Filename % sequence):
+            sequence = int(sequence or 0) + 1
+        Filename = Filename % sequence
 
-    video.streams.get_by_itag(tag).download(filename = Filename)
+        Filename = Filename.replace('.mp4','')
+
+        pytube_object.streams.get_by_itag(tag).download(filename = Filename)
+    else:
+        Filename_ori = Filename_ori.replace('.mp4','')
+        pytube_object.streams.get_by_itag(tag).download(filename = Filename_ori)
 
 except:
     print("Invalid input!")
