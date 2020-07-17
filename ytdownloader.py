@@ -53,8 +53,3 @@ try:
 
 except:
     print("Invalid input!")
-
-
-
-# https://www.youtube.com/watch?v=UFQEttrn6CQ # 米津玄師 感電MV
-# https://www.youtube.com/watch?v=MpYy6wwqxoo # LiSA Gurege first take
