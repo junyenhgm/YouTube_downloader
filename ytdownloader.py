@@ -21,13 +21,12 @@ from os.path import isfile
 
 
 
-class Youtube_download:
+class YouTube_download:
     def download_by_url(url):
         pytube_object = YouTube(url)
         stream = pytube_object.streams.all()
 
         print(pytube_object.title)  # YouTube video tile
-
         for i in stream:
             print(i)
 
@@ -37,16 +36,13 @@ class Youtube_download:
         sequence = 1
         # Filename = "YouTube%s.mp4"
         Filename_ori = pytube_object.title + ".mp4"
-
         Filename = pytube_object.title + "(%s).mp4"
 
         if isfile(Filename_ori):
             while isfile(Filename % sequence):
                 sequence = int(sequence or 0) + 1
             Filename = Filename % sequence
-
             Filename = Filename.replace('.mp4','')
-
             pytube_object.streams.get_by_itag(tag).download(filename = Filename)
         else:
             Filename_ori = Filename_ori.replace('.mp4','')
@@ -55,7 +51,6 @@ class Youtube_download:
     def download_music(url):
         pytube_object = YouTube(url)
         # stream = pytube_object.streams.all()
-
         print(pytube_object.title)  # YouTube video tile
 
         # Add Serial Number at the end of filename
@@ -68,20 +63,17 @@ class Youtube_download:
             while isfile(Filename % sequence):
                 sequence = int(sequence or 0) + 1
             Filename = Filename % sequence
-
             Filename = Filename.replace('.mp4','')
-
             pytube_object.streams.get_by_itag(140).download(filename = Filename)
         else:
             Filename_ori = Filename_ori.replace('.mp4','')
             pytube_object.streams.get_by_itag(140).download(filename = Filename_ori)
 
 
-
 print("Give URL:")
 url = input()
 try:
-    # Youtube_download.download_by_url(url)
-    Youtube_download.download_music(url)
+    YouTube_download.download_by_url(url)
+    # Youtube_download.download_music(url)
 except:
     print("Invalid input!")
