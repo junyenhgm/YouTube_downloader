@@ -90,11 +90,21 @@ class YouTube_download:
                 pytube_object.streams.filter(progressive=True).last().download(filename = Filename_ori)
 
 
+Select = input("[0] Download video by tag \n[1] Download music \n[2] Download playlist\n")
+if int(Select) not in range(3):
+    print("Invalid input!")
+    exit()
+
 print("Give URL:")
 url = input()
 try:
-    YouTube_download.download_by_url(url)
-    # Youtube_download.download_music(url)
-    # YouTube_download.download_playlist(url)
+    if int(Select) == 0:
+        YouTube_download.download_by_url(url)
+    elif int(Select) == 1:
+        YouTube_download.download_music(url)
+    elif int(Select) == 2:
+        YouTube_download.download_playlist(url)
+    else:
+        print("Invalid input!")
 except:
     print("Invalid input!")
