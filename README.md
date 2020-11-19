@@ -1,6 +1,6 @@
 # YouTube_downloader
 
-Install pytube
+Install `pytube`
 ```
 pip install pytube
 ```
