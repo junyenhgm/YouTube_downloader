@@ -5,4 +5,4 @@ Install `pytube`
 pip install pytube
 ```
 \
-Go for [ffmpeg](https://ffmpeg.org/download.html) if file converting is needed.
+Go for [ffmpeg](https://ffmpeg.org/download.html) if file converti is needed.
