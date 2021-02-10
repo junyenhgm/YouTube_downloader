@@ -50,7 +50,7 @@ class YouTube_download:
         print(pytube_object.title)  # YouTube video tile
 
         Filename = Get_Filename(pytube_object)
-        pytube_object.streams.filter(only_audio=True).first().download(filename = Filename)
+        pytube_object.streams.filter(progressive=True).last().download(filename = Filename)
 
         # Convert to mp3
         # videoclip = VideoFileClip(Filename + '.mp4')
