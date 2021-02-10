@@ -3,14 +3,23 @@ from pytube import Playlist
 from os.path import isfile
 import sys
 import re
-
+import moviepy.editor as mp
+import unicodedata
 
 def Get_Filename(pytube_obj):
     # Add Serial Number at the end of filename
     sequence = 1
-    # Filename = "YouTube%s.mp4"
-    Filename_ori = pytube_obj.title + ".mp4"
-    Filename = pytube_obj.title + "(%s).mp4"
+
+    video_title = pytube_obj.title
+
+    # Replace full-width characters by half-width
+    video_title = unicodedata.normalize('NFKC', video_title)
+    
+    # Remove special characters
+    video_title = re.sub(r"(【|】|/)", "", video_title) 
+
+    Filename_ori = video_title + ".mp4"
+    Filename = video_title + "(%s).mp4"
 
     if isfile(Filename_ori):
         while isfile(Filename % sequence):
@@ -41,7 +50,16 @@ class YouTube_download:
         print(pytube_object.title)  # YouTube video tile
 
         Filename = Get_Filename(pytube_object)
-        pytube_object.streams.get_by_itag(140).download(filename = Filename)
+        pytube_object.streams.filter(only_audio=True).first().download(filename = Filename)
+
+        # Convert to mp3
+        # videoclip = VideoFileClip(Filename + '.mp4')
+        # videoclip.audio.write_audiofile(Filename + '.mp3')
+        # videoclip.close()
+
+        audioclip = mp.AudioFileClip(Filename + '.mp4')
+        audioclip.write_audiofile(Filename + '.mp3')
+        audioclip.close()
 
     def download_playlist(self, url):
         playlist = Playlist(url)
