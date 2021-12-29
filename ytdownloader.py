@@ -4,7 +4,10 @@ from os.path import isfile
 import sys
 import re
 import moviepy.editor as mp
+from moviepy.video.io.VideoFileClip import VideoFileClip
+from moviepy.audio.io.AudioFileClip import AudioFileClip
 import unicodedata
+import os
 
 def Get_Filename(title):
     # Add Serial Number at the end of filename
@@ -16,7 +19,8 @@ def Get_Filename(title):
     video_title = unicodedata.normalize('NFKC', video_title)
     
     # Remove special characters
-    video_title = re.sub(r"('.'|【|】|':'|/)", "", video_title) 
+    # video_title = re.sub(r"('.'|【|】|':'|/)", "", video_title)
+    video_title = video_title.replace('.', '').replace('【', '').replace('】', '').replace(':', '').replace(r'/', '').replace(r'?', '').replace(r'!', '')
 
     Filename_ori = video_title + ".mp4"
     Filename = video_title + "(%s).mp4"
@@ -45,6 +49,7 @@ class YouTube_download:
 
         tag = input("Input tag you want to download:")
         Filename = Get_Filename(pytube_object.title)
+        Filename = Filename + '.mp4'
         pytube_object.streams.get_by_itag(tag).download(filename = Filename)
 
     def download_music(self, url):
