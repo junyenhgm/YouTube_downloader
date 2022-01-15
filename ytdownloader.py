@@ -49,8 +49,8 @@ class YouTube_download:
 
         tag = input("Input tag you want to download:")
         Filename = Get_Filename(pytube_object.title)
-        Filename = Filename + '.mp4'
-        pytube_object.streams.get_by_itag(tag).download(filename = Filename)
+        print(Filename)
+        pytube_object.streams.get_by_itag(tag).download(filename = Filename + '.mp4')
 
     def download_music(self, url):
         pytube_object = YouTube(url)
@@ -59,7 +59,7 @@ class YouTube_download:
 
         Filename = Get_Filename(pytube_object.title)
         print(Filename)
-        pytube_object.streams.filter(progressive=True).last().download(filename = Filename)
+        pytube_object.streams.filter(progressive=True).last().download(filename = Filename + '.mp4')
 
         # Convert to mp3
         # videoclip = VideoFileClip(Filename + '.mp4')
