@@ -77,14 +77,17 @@ class YouTube_download:
         
         print(len(playlist.video_urls))
         
+        # for url in playlist.video_urls:
+        #     print(url)
+
         for url in playlist.video_urls:
             pytube_object = YouTube(url)
-            stream = pytube_object.streams.filter(progressive=True).all()
+            # stream = pytube_object.streams.filter(progressive=True).all()
             print(pytube_object.title)  # YouTube video tile
             # for i in stream:
             #     print(i)
             
-            Filename = Get_Filename(pytube_object)
+            Filename = Get_Filename(pytube_object.title)
             pytube_object.streams.filter(progressive=True).last().download(filename = Filename)
 
 
